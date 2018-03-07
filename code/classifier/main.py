@@ -33,9 +33,7 @@ features_providers = [
 
 extractor = FeaturesExtractor(features_providers, color_space)
 
-# print('Feature vector length:', len(data.train.features[0]))
-
-data = DataProvider(cars_path, non_cars_path, test_size=0.2, limit=3000)
+data = DataProvider(cars_path, non_cars_path, test_size=0.2)
 
 clf = Classifier(extractor, fit_step=3000)
 

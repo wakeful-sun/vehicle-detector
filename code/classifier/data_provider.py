@@ -1,21 +1,16 @@
 import glob
 import numpy as np
 from sklearn.model_selection import train_test_split
-import random
 
 
 class DataProvider:
 
-    def __init__(self, cars_path, non_cars_path, test_size=0.2, limit=None):
+    def __init__(self, cars_path, non_cars_path, test_size=0.2):
         non_car_class_id = 0
         self.car_class_id = 1
 
         cars_paths = glob.glob(cars_path)
-        random.shuffle(cars_paths)
-        cars_paths = cars_paths[:limit]
         non_cars_paths = glob.glob(non_cars_path)
-        random.shuffle(non_cars_paths)
-        non_cars_paths = non_cars_paths[:limit]
 
         features = np.concatenate((cars_paths, non_cars_paths))
         labels = np.concatenate((np.full(len(cars_paths), self.car_class_id),
