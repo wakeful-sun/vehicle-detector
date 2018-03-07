@@ -4,12 +4,11 @@ from classifier import Classifier
 from features.spatial_binning import SpatialBinningOfColorFeaturesFactory
 from features.color_histogram import ColorHistogramFeaturesFactory
 from features.hog import HistogramOfOrientedGradientsFeaturesFactory
-from detector import Detector
 
 
-cars_path = r"..\03_training_images\vehicles_smallset\vehicles_smallset\cars1\*.jpeg"
-non_cars_path = r"..\03_training_images\non-vehicles_smallset\non-vehicles_smallset\notcars1\*jpeg"
-test_image_path = r"..\01_images\bbox-example-image.jpg"
+cars_path = "../../training_images/vehicles/vehicles/*/*.png"
+non_cars_path = "../../training_images/non-vehicles/non-vehicles/*/*.png"
+test_image_path = "../../images/bbox-example-image.jpg"
 
 #   ------
 color_space = "HSV"  # Can be RGB, HSV, LUV, HLS, YUV, YCrCb
@@ -34,15 +33,17 @@ features_providers = [
 
 extractor = FeaturesExtractor(features_providers, color_space)
 
+# print('Feature vector length:', len(data.train.features[0]))
 
-data = DataProvider(extractor, cars_path, non_cars_path, test_size=0.2)
-print('Feature vector length:', len(data.train.features[0]))
+data = DataProvider(cars_path, non_cars_path, test_size=0.2, limit=3000)
 
-clf = Classifier()
+clf = Classifier(extractor, fit_step=3000)
+
+print("Training in progress...")
 clf.train(data.train.features, data.train.labels)
 
-print(round(clf.training_time, 2), 'Seconds to train SVC...')
-print('Test Accuracy of SVC = ', clf.accuracy(data.test.features, data.test.labels))
+print("Training time: {:.2f} min.".format(clf.training_time/60))
+print("Test accuracy: {}.".format(clf.accuracy(data.test.features, data.test.labels)))
 
 #TODO: visualize
 #TODO: save the result

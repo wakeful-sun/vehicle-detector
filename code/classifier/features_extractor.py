@@ -1,5 +1,4 @@
 import numpy as np
-import matplotlib.image as mpimg
 import cv2
 
 
@@ -17,11 +16,12 @@ class FeaturesExtractor:
     def extract_from_files(self, image_paths):
         features = []
         for image_path in image_paths:
-            rgb_image = mpimg.imread(image_path)
+            bgr_image = cv2.imread(image_path)
+            rgb_image = cv2.cvtColor(bgr_image, cv2.COLOR_BGR2RGB)
             image_features = self.extract_from_image(rgb_image)
             features.append(image_features)
 
-        return features
+        return np.array(features).astype(np.float64)
 
     @staticmethod
     def _change_color_space(rgb_image, color_space):
