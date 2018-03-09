@@ -1,0 +1,49 @@
+Accuracy: 76.0980%
+--------------------------------------------------
+	- Features vector compound parts -
+features_providers: [SpatialBinningOfColorFeaturesFactory, ColorHistogramFeaturesFactory, HistogramOfOrientedGradientsFeaturesFactory]
+color_space: HSV
+--------------------------------------------------
+	- Spatial binning of color parameters -
+spatial_binning_size: (16, 16)
+--------------------------------------------------
+	- Color histogram parameters -
+color_histogram_n_bins: 16
+bins_range: (0, 256)
+--------------------------------------------------
+	- Histogram of oriented gradients parameters -
+orient: 9
+pix_per_cell: 8
+cell_per_block: 2
+hog_channel: ALL
+--------------------------------------------------
+Training items count: 3000
+Testing items count: 3552
+Training time: 0.52 minutes
+--------------------------------------------------
+--------------------------------------------------
+	Data information:
+***
+Car class: 1
+***
+Training items amount: 14208
+Car images amount: 7018
+Training classes: {0, 1}
+Training classes amount: 2
+***
+Testing items amount: 3552
+Testing classes: {0, 1}
+Testing classes amount: 2
+***
+Some train images info:
+Name: ../../training_images/vehicles/vehicles\KITTI_extracted\5610, Extension: .png, Shape: (64, 64, 3)
+Name: ../../training_images/non-vehicles/non-vehicles\GTI\image1819, Extension: .png, Shape: (64, 64, 3)
+Name: ../../training_images/vehicles/vehicles\KITTI_extracted\2015, Extension: .png, Shape: (64, 64, 3)
+Name: ../../training_images/non-vehicles/non-vehicles\Extras\extra1103, Extension: .png, Shape: (64, 64, 3)
+Name: ../../training_images/vehicles/vehicles\KITTI_extracted\4107, Extension: .png, Shape: (64, 64, 3)
+Some train images info:
+Name: ../../training_images/non-vehicles/non-vehicles\Extras\extra4872, Extension: .png, Shape: (64, 64, 3)
+Name: ../../training_images/non-vehicles/non-vehicles\GTI\image1750, Extension: .png, Shape: (64, 64, 3)
+Name: ../../training_images/non-vehicles/non-vehicles\Extras\extra5269, Extension: .png, Shape: (64, 64, 3)
+Name: ../../training_images/vehicles/vehicles\KITTI_extracted\4815, Extension: .png, Shape: (64, 64, 3)
+Name: ../../training_images/vehicles/vehicles\KITTI_extracted\2874, Extension: .png, Shape: (64, 64, 3)

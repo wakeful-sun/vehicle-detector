@@ -1,6 +1,7 @@
 import time
 from sklearn.svm import LinearSVC
 from sklearn.preprocessing import StandardScaler
+from sklearn.externals import joblib
 
 
 class Classifier:
@@ -11,40 +12,57 @@ class Classifier:
 
         self.clf = None
         self.scaler = None
+
         self.t_time = 0
+        self.n_training = 0
+        self.n_testing = 0
 
     @property
     def training_time(self):
         return self.t_time
+
+    @property
+    def summary(self):
+        return [
+            "Training items count: {}".format(self.n_training),
+            "Testing items count: {}".format(self.n_testing),
+            "Training time: {:.2f} minutes".format(self.t_time/60)
+        ]
 
     def train(self, train_feature_paths, train_labels):
         dataSet = DataSet(train_feature_paths, train_labels)
         self.clf = LinearSVC()
         self.scaler = StandardScaler()
 
-        t_start = time.time()
-
         # Can be replaced with while loop for classifier that support partial fit
         # LinearSVC does not support partial fit
         if dataSet.move_next(self.fit_step):
+            t_start = time.time()
             step_features, step_labels = dataSet.current
 
             features = self.features_extractor.extract_from_files(step_features)
             self.scaler.fit(features)
             features_norm = self.scaler.transform(features)
             self.clf.fit(features_norm, step_labels)
+
+            self.n_training = self.n_training + len(features)
+            self.t_time = self.t_time + time.time() - t_start
         else:
             raise Exception("no training data provided")
 
-        t_end = time.time()
-        self.t_time = t_end - t_start
-
     def accuracy(self, test_feature_paths, test_labels):
         features = self.features_extractor.extract_from_files(test_feature_paths)
-        return round(self.clf.score(features, test_labels), 4)
+        self.n_testing = len(features)
+        return self.clf.score(features, test_labels)
 
     def predict(self, feature):
         return self.clf.predict(feature)
+
+    def save_model(self, path):
+        joblib.dump(self.clf, path)
+
+    def save_scaler(self, path):
+        joblib.dump(self.scaler, path)
 
 
 class DataSet:
