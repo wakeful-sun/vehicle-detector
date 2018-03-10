@@ -34,7 +34,7 @@ class DetectionProcess:
             return image[..., [2, 1, 0]]
 
         bgr_frame = cv2.imread(image_path)
-        frame = self.image_handler_fn.process_frame(bgr_frame)
+        frame = self.image_handler_fn(bgr_frame)
 
         rgb_frame = convert(frame)
         plt.imshow(rgb_frame)

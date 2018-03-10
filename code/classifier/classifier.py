@@ -56,8 +56,8 @@ class Classifier:
         self.n_testing = len(features)
         return self.clf.score(features, test_labels)
 
-    def predict(self, rgb_image):
-        features = self.features_extractor.extract_from_image(rgb_image)
+    def predict(self, bgr_image):
+        features = self.features_extractor.extract_from_image(bgr_image)
         features_norm = self.scaler.transform(np.array(features).reshape(1, -1))
         return self.clf.predict(features_norm)
 

@@ -16,6 +16,7 @@ non_car_id = 0
 
 #   ------
 color_space = "HSV"  # Can be RGB, HSV, LUV, HLS, YUV, YCrCb
+classifier_image_size = (64, 64)
 #   ------
 spatial_binning_size = (16, 16)
 #   ------
@@ -36,7 +37,7 @@ features_providers = [
                                                 hog_channel=hog_channel)
 ]
 
-extractor = FeaturesExtractor(features_providers, color_space)
+extractor = FeaturesExtractor(features_providers, color_space=color_space, image_size=classifier_image_size)
 clf = Classifier(extractor, fit_step=3000)
 
 data = DataProvider(cars_paths, non_cars_paths, car_id=car_id, non_car_id=non_car_id, test_size=0.2)
@@ -58,6 +59,7 @@ info = [
     "\t- Features vector compound parts -",
     "features_providers: [{}]".format(", ".join([type(i).__name__ for i in features_providers])),
     "color_space: {}".format(color_space),
+    "classifier_image_size: {}".format(classifier_image_size),
     space,
     "\t- Spatial binning of color parameters -",
     "spatial_binning_size: {}".format(spatial_binning_size),

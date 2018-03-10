@@ -113,18 +113,18 @@ class DataProvider:
 
         def get_random_images_of_class(paths, c_indexes, n):
             indexes = random.sample(range(len(c_indexes)), n)
-            rgb_images = []
+            bgr_images = []
             for i in indexes:
                 file_path = paths[c_indexes[i]]
                 image = cv2.imread(file_path)
-                rgb_images.append(image)
+                bgr_images.append(image)
 
-            return rgb_images
+            return bgr_images
 
-        images = get_random_images_of_class(features, class_indexes, 20)
-        composite_image = tools.create_composite_image(images, h_span=5, v_span=5, n_columns=5)
+        bgr_images = get_random_images_of_class(features, class_indexes, 20)
+        bgr_composite_image = tools.create_composite_image(bgr_images, h_span=5, v_span=5, n_columns=5)
 
-        cv2.imwrite(path, composite_image)
+        cv2.imwrite(path, bgr_composite_image)
 
 
 class DataSet:
