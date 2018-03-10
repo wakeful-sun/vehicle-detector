@@ -75,6 +75,7 @@ class DataSet:
         self.l = labels
         self.start = 0
         self.current_batch = None
+        self.all_data_requested = False
 
     def _range(self, items, batch_size):
         if batch_size is None:
@@ -83,8 +84,12 @@ class DataSet:
 
     def move_next(self, batch_size=None):
         self.current_batch = self._range(self.f, batch_size), self._range(self.l, batch_size)
-        if len(self.current_batch[0]):
-            self.start = self.start + batch_size
+        if len(self.current_batch[0]) and self.all_data_requested is False:
+            if batch_size is None:
+                self.all_data_requested = True
+            else:
+                self.start = self.start + batch_size
+
             return True
         else:
             self.reset()

@@ -16,7 +16,7 @@ non_car_id = 0
 
 #   ------
 color_space = "HSV"  # Can be RGB, HSV, LUV, HLS, YUV, YCrCb
-classifier_image_size = (64, 64)
+classifier_image_size = (32, 32)
 #   ------
 spatial_binning_size = (16, 16)
 #   ------
@@ -38,7 +38,7 @@ features_providers = [
 ]
 
 extractor = FeaturesExtractor(features_providers, color_space=color_space, image_size=classifier_image_size)
-clf = Classifier(extractor, fit_step=3000)
+clf = Classifier(extractor, fit_step=None)
 
 data = DataProvider(cars_paths, non_cars_paths, car_id=car_id, non_car_id=non_car_id, test_size=0.2)
 data.save_labels_info_graph()

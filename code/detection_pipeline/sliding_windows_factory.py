@@ -24,9 +24,9 @@ class SlidingWindowsFactory:
         return np.int(window_size * (1 - overlap_percentage))
 
     @staticmethod
-    def _get_windows_amount(area_size, step_size):
-        windows_amount = np.int((area_size - step_size) / step_size)
-        assert windows_amount > 0, "can't split image on sliding windows, invalid configuration parameters"
+    def _get_windows_amount(area_size, window_size, step_size):
+        assert area_size >= window_size, "can't split image on windows, area is too small"
+        windows_amount = 1 + np.int((area_size - window_size) / step_size)
         return windows_amount
 
     @staticmethod
@@ -47,8 +47,8 @@ class SlidingWindowsFactory:
         x_step_size = self._get_step_size(self.window_size_x, self.overlap_x)
         y_step_size = self._get_step_size(self.window_size_y, self.overlap_y)
 
-        nx_windows = self._get_windows_amount(search_region_size_x, x_step_size)
-        ny_windows = self._get_windows_amount(search_region_size_y, y_step_size)
+        nx_windows = self._get_windows_amount(search_region_size_x, self.window_size_x, x_step_size)
+        ny_windows = self._get_windows_amount(search_region_size_y, self.window_size_y, y_step_size)
 
         x_start = x_boundaries[0]
         y_start = y_boundaries[0]
