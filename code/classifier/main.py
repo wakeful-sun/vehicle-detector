@@ -4,10 +4,15 @@ from classifier import Classifier
 from features.spatial_binning import SpatialBinningOfColorFeaturesFactory
 from features.color_histogram import ColorHistogramFeaturesFactory
 from features.hog import HistogramOfOrientedGradientsFeaturesFactory
+import glob
+import cv2
 
 
-cars_path = "../../training_images/vehicles/vehicles/*/*.png"
-non_cars_path = "../../training_images/non-vehicles/non-vehicles/*/*.png"
+cars_paths = glob.glob("../../training_images/vehicles/vehicles/*/*.png")
+non_cars_paths = glob.glob("../../training_images/non-vehicles/non-vehicles/*/*.png")
+
+car_id = 1
+non_car_id = 0
 
 #   ------
 color_space = "HSV"  # Can be RGB, HSV, LUV, HLS, YUV, YCrCb
@@ -34,8 +39,11 @@ features_providers = [
 extractor = FeaturesExtractor(features_providers, color_space)
 clf = Classifier(extractor, fit_step=3000)
 
-data = DataProvider(cars_path, non_cars_path, test_size=0.2)
+data = DataProvider(cars_paths, non_cars_paths, car_id=car_id, non_car_id=non_car_id, test_size=0.2)
 data.save_labels_info_graph()
+data.save_random_images(car_id, "../training_results/random_car_images.png")
+data.save_random_images(non_car_id, "../training_results/random_non_car_images.png")
+
 print("Training is in progress...")
 clf.train(data.train.features, data.train.labels)
 
@@ -77,5 +85,16 @@ def save_summary(path, acc, content):
 
 
 clf.save_model("../training_results/model.pkl")
-clf.save_scaler("../training_results/scaler.pkl")
 save_summary("../training_results/", accuracy, info)
+
+
+def print_prediction_result(paths, name, expected_class_id):
+    for i in range(10):
+        path = paths[i]
+        im = cv2.imread(path)
+        r = clf.predict(im)
+        print("{}: result is {}, expected {}.\t{}".format(name, r, expected_class_id, path))
+
+
+print_prediction_result(cars_paths, "Cars", car_id)
+print_prediction_result(non_cars_paths, "Non cars", non_car_id)

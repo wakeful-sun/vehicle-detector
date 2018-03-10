@@ -2,6 +2,7 @@ import time
 from sklearn.svm import LinearSVC
 from sklearn.preprocessing import StandardScaler
 from sklearn.externals import joblib
+import numpy as np
 
 
 class Classifier:
@@ -55,14 +56,13 @@ class Classifier:
         self.n_testing = len(features)
         return self.clf.score(features, test_labels)
 
-    def predict(self, feature):
-        return self.clf.predict(feature)
+    def predict(self, rgb_image):
+        features = self.features_extractor.extract_from_image(rgb_image)
+        features_norm = self.scaler.transform(np.array(features).reshape(1, -1))
+        return self.clf.predict(features_norm)
 
     def save_model(self, path):
-        joblib.dump(self.clf, path)
-
-    def save_scaler(self, path):
-        joblib.dump(self.scaler, path)
+        joblib.dump(self, path)
 
 
 class DataSet:
@@ -97,4 +97,3 @@ class DataSet:
     @property
     def current(self):
         return self.current_batch
-
