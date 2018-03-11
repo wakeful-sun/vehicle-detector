@@ -1,13 +1,7 @@
 import numpy as np
 
 
-class SlidingWindowsFactory:
-
-    def __init__(self, x_start_stop=(None, None), y_start_stop=(None, None), xy_window=(64, 64), xy_overlap=(0.5, 0.5)):
-        self.x_start_stop = x_start_stop
-        self.y_start_stop = y_start_stop
-        self.window_size_x, self.window_size_y = xy_window
-        self.overlap_x, self.overlap_y = xy_overlap
+class SearchWindowsFactory:
 
     @staticmethod
     def _get_min_max(min_max_array, default_max):
@@ -35,29 +29,35 @@ class SlidingWindowsFactory:
         max = min + window_size
         return min, max
 
-    def create(self, img_shape):
-        h, w = img_shape[0], img_shape[1]
+    def create(self, max_height, max_width, configs):
+        windows = []
+        [windows.extend(self.create_windows_for_config(max_height, max_width, config)) for config in configs]
+        return windows
 
-        x_boundaries = self._get_min_max(self.x_start_stop, w)
-        y_boundaries = self._get_min_max(self.y_start_stop, h)
+    def create_windows_for_config(self, max_height, max_width, config):
+        window_size_x, window_size_y = config["xy_window"]
+        overlap_x, overlap_y = config["xy_overlap"]
+
+        x_boundaries = self._get_min_max(config["x_start_stop"], max_width)
+        y_boundaries = self._get_min_max(config["y_start_stop"], max_height)
 
         search_region_size_x = self._get_search_region_size(x_boundaries)
         search_region_size_y = self._get_search_region_size(y_boundaries)
 
-        x_step_size = self._get_step_size(self.window_size_x, self.overlap_x)
-        y_step_size = self._get_step_size(self.window_size_y, self.overlap_y)
+        x_step_size = self._get_step_size(window_size_x, overlap_x)
+        y_step_size = self._get_step_size(window_size_y, overlap_y)
 
-        nx_windows = self._get_windows_amount(search_region_size_x, self.window_size_x, x_step_size)
-        ny_windows = self._get_windows_amount(search_region_size_y, self.window_size_y, y_step_size)
+        nx_windows = self._get_windows_amount(search_region_size_x, window_size_x, x_step_size)
+        ny_windows = self._get_windows_amount(search_region_size_y, window_size_y, y_step_size)
 
         x_start = x_boundaries[0]
         y_start = y_boundaries[0]
 
         window_list = []
         for y_window_number in range(ny_windows):
-            y_min, y_max = self._get_window_min_max(y_start, y_step_size, self.window_size_y, y_window_number)
+            y_min, y_max = self._get_window_min_max(y_start, y_step_size, window_size_y, y_window_number)
             for x_window_number in range(nx_windows):
-                x_min, x_max = self._get_window_min_max(x_start, x_step_size, self.window_size_x, x_window_number)
+                x_min, x_max = self._get_window_min_max(x_start, x_step_size, window_size_x, x_window_number)
                 window_list.append(((x_min, y_min), (x_max, y_max)))
 
         return window_list
