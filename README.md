@@ -18,7 +18,7 @@ The project implement a pipeline that detects vehicles on video stream and marks
 [image6]: ./examples/labels_map.png
 [image7]: ./examples/output_bboxes.png
 [video1]: ./project_video.mp4
-
+<!--
 #### 1. Provide a Writeup / README that includes all the rubric points and how you addressed each one.  You can submit your writeup as markdown or pdf.  [Here](https://github.com/udacity/CarND-Vehicle-Detection/blob/master/writeup_template.md) is a template writeup for this project you can use as a guide and a starting point.  
 
 You're reading it!
@@ -96,3 +96,4 @@ Here's an example result showing the heatmap from a series of frames of video, t
 Here I'll talk about the approach I took, what techniques I used, what worked and why, where the pipeline might fail and how I might improve it if I were going to pursue this project further.  
 
 
+-->
