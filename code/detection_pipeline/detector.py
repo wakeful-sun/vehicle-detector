@@ -34,6 +34,7 @@ class Detector:
         self.heat_map.update(car_windows)
         cars_boundaries = self.heat_map.get_cars_boundaries()
         self.draw_boxes(resulting_image, cars_boundaries, self.color, self.thick)
+        # self.draw_boxes(resulting_image, self.search_windows, (0,0,255), 2)
 
         print("Detection time: {:.4f} seconds".format(time.time() - t_start))
         return resulting_image

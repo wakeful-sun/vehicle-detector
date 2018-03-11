@@ -1,10 +1,11 @@
 import numpy as np
 from scipy.ndimage.measurements import label
+from collections import deque
 
 
 class HeatMap:
 
-    def __init__(self, height, width, threshold=1):
+    def __init__(self, height, width, threshold=2):
         self.height = height
         self.width = width
         self.threshold = threshold
@@ -12,22 +13,19 @@ class HeatMap:
         self.heat_step = 1
         self.color_min = 0
         self.color_max = 255
-        self.heat_map = np.zeros((height, width)).astype(np.float)
-        self.labels = label(self.heat_map)
-
-    @property
-    def detected_cars_amount(self):
-        return self.labels[1]
+        self.detections_cache = deque([], maxlen=10)
 
     def update(self, car_windows):
-        self._add_heat(self.heat_map, car_windows, self.heat_step)
-        self._apply_threshold(self.heat_map, self.threshold)
-        self.heat_map = np.clip(self.heat_map, self.color_min, self.color_max)
-
-        self.labels = label(self.heat_map)
+        heat_map = np.zeros((self.height, self.width)).astype(np.float)
+        self._add_heat(heat_map, car_windows, self.heat_step)
+        self.detections_cache.appendleft(heat_map)
 
     def get_cars_boundaries(self):
-        labels_map, cars_amount = self.labels
+        heat_map = np.average(self.detections_cache, axis=0)
+        self._apply_threshold(heat_map, self.threshold)
+        heat_map = np.clip(heat_map, self.color_min, self.color_max)
+
+        labels_map, cars_amount = label(heat_map)
         cars_boundaries = []
 
         for car_number in range(1, cars_amount + 1):

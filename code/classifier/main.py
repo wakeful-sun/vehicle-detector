@@ -15,12 +15,12 @@ car_id = 1
 non_car_id = 0
 
 #   ------
-color_space = "HSV"  # Can be RGB, HSV, LUV, HLS, YUV, YCrCb
+color_space = "YUV"  # Can be RGB, HSV, LUV, HLS, YUV, YCrCb
 classifier_image_size = (32, 32)
 #   ------
-spatial_binning_size = (16, 16)
+spatial_binning_size = (32, 32)
 #   ------
-color_histogram_n_bins = 16
+color_histogram_n_bins = 32
 bins_range = (0, 256)
 #   ------
 orient = 9

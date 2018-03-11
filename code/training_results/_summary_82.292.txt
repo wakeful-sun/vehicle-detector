@@ -1,0 +1,52 @@
+Accuracy: 82.2917%
+--------------------------------------------------
+	- Features vector compound parts -
+features_providers: [SpatialBinningOfColorFeaturesFactory, ColorHistogramFeaturesFactory, HistogramOfOrientedGradientsFeaturesFactory]
+color_space: YUV
+classifier_image_size: (32, 32)
+--------------------------------------------------
+	- Spatial binning of color parameters -
+spatial_binning_size: (32, 32)
+--------------------------------------------------
+	- Color histogram parameters -
+color_histogram_n_bins: 32
+bins_range: (0, 256)
+--------------------------------------------------
+	- Histogram of oriented gradients parameters -
+orient: 9
+pix_per_cell: 8
+cell_per_block: 2
+hog_channel: ALL
+--------------------------------------------------
+Training items count: 14208
+Testing items count: 3552
+Training time: 1.15 minutes
+--------------------------------------------------
+--------------------------------------------------
+	Data set information:
+***
+Car class ID: 1
+***
+Training items amount: 14208
+Car images amount: 7019
+Training classes: {0, 1}
+Training classes amount: 2
+***
+Testing items amount: 3552
+Testing classes: {0, 1}
+Testing classes amount: 2
+***
+Some train images info:
+Name: ../../training_images/vehicles/vehicles\KITTI_extracted\2876, Extension: .png, Shape: (64, 64, 3)
+Name: ../../training_images/vehicles/vehicles\GTI_MiddleClose\image0209, Extension: .png, Shape: (64, 64, 3)
+Name: ../../training_images/vehicles/vehicles\GTI_MiddleClose\image0363, Extension: .png, Shape: (64, 64, 3)
+Name: ../../training_images/vehicles/vehicles\KITTI_extracted\3156, Extension: .png, Shape: (64, 64, 3)
+Name: ../../training_images/non-vehicles/non-vehicles\Extras\extra191, Extension: .png, Shape: (64, 64, 3)
+Name: ../../training_images/non-vehicles/non-vehicles\Extras\extra154, Extension: .png, Shape: (64, 64, 3)
+Some test images info:
+Name: ../../training_images/vehicles/vehicles\KITTI_extracted\3389, Extension: .png, Shape: (64, 64, 3)
+Name: ../../training_images/non-vehicles/non-vehicles\Extras\extra5600, Extension: .png, Shape: (64, 64, 3)
+Name: ../../training_images/vehicles/vehicles\GTI_Right\image0696, Extension: .png, Shape: (64, 64, 3)
+Name: ../../training_images/vehicles/vehicles\KITTI_extracted\2062, Extension: .png, Shape: (64, 64, 3)
+Name: ../../training_images/non-vehicles/non-vehicles\Extras\extra4412, Extension: .png, Shape: (64, 64, 3)
+Name: ../../training_images/vehicles/vehicles\GTI_Far\image0763, Extension: .png, Shape: (64, 64, 3)
