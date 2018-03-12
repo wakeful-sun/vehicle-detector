@@ -171,3 +171,14 @@ My implementation also collects up to 10 heat maps from last frames and takes in
 ##### 3. Video Implementation
 
 Here's a [link to my video result](./output.mp4)
+
+##### 4. Discussion
+
+The approach of finding car boundaries has one obvious bottleneck - search windows amount. Big amount of search windows significantly increase detection time per frame. 
+My implementation can have better performance with same quantity of search windows. 
+**Histogram of Oriented Gradients (HOG)** features can be calculated once for entire frame and reused for each new window.
+In order to make it happen I would need to change implementation a bit on classifier side.
+
+Also I feel it's possible to fully get rid of false detections by tweaking HeatMap parameters.
+
+One more thing I don't like is a search windows configurations. I might be replaced with some algorithm.
