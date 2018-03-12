@@ -32,6 +32,7 @@ configs = [
 
 search_windows_factory = SearchWindowsFactory()
 search_windows = search_windows_factory.create(height, width, configs)
+print("Total amount of search windows is {}.".format(len(search_windows)))
 
 clf = joblib.load("../training_results/model.pkl")
 

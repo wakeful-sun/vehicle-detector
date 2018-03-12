@@ -15,7 +15,7 @@ car_id = 1
 non_car_id = 0
 
 #   ------
-color_space = "YUV"  # Can be RGB, HSV, LUV, HLS, YUV, YCrCb
+color_space = "YUV"  # Can be RGB, HSV, LUV, HLS, YUV, YCrCb or any other supported by cv2 library
 classifier_image_size = (32, 32)
 #   ------
 spatial_binning_size = (32, 32)
