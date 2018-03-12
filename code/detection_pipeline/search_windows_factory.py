@@ -60,4 +60,6 @@ class SearchWindowsFactory:
                 x_min, x_max = self._get_window_min_max(x_start, x_step_size, window_size_x, x_window_number)
                 window_list.append(((x_min, y_min), (x_max, y_max)))
 
+        print("Window size: {}, Total amount of search windows: {}.".format((window_size_x, window_size_y),
+                                                                            len(window_list)))
         return window_list
