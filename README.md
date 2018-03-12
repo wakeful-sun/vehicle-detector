@@ -1,6 +1,7 @@
 **Vehicle Detection Project**
 
 The project implements a pipeline that detects vehicles on video stream and marks them with a bounding boxes.
+Project uses many ideas from [Udacity Self-Driving Car Engineer](https://eu.udacity.com/course/self-driving-car-engineer-nanodegree--nd013) course.
 
 Project consists of two parts: classifier training pipeline and actual detector/tracker.
 
